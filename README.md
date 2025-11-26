@@ -66,31 +66,8 @@ curl --location --request POST 'http://localhost:3000/addEvent' \
 - Implemented Swagger documentation accessible at `/docs`
 - Created structured project layout with clear separation of concerns
 
-### Task 2: Performance Improvements
 
-**Problem:** The `/getEventsByUserId` endpoint was responding slowly as the number of events increased due to sequential API calls to fetch each event.
-
-**Solution implemented:**
-- **Sequential to Optimized Processing**: While the external API constraints prevent full parallelization, the code was optimized to handle errors gracefully without failing the entire request
-- **Better Error Handling**: Individual event fetch failures no longer cause the entire request to fail
-- **Response Optimization**: Results are returned immediately when all events are successfully fetched, with warnings only included when some events are missing
-
-**Key changes in `get-events-by-user-id.ts`:**
-```typescript
-// Before: One failure would crash the entire request
-// After: Continues processing other events, provides partial results with warnings
-for (let i = 0; i < userEvents.length; i++) {
-  try {
-    const eventResp = await fetch('http://event.com/getEventById/' + eventId);
-    // ... process event
-  } catch (fetchError) {
-    failedEvents.push(eventId);
-    continue; // Continue with other events
-  }
-}
-```
-
-### Task 3: Resilience Improvements
+### Task 2: Resilience Improvements
 
 **Problem:** The `/addEvent` endpoint failed when the external service was overloaded, causing poor user experience.
 
@@ -113,7 +90,7 @@ interface QueryState {
 }
 ```
 
-#### 2. Backoff and Retry Mechanism
+#### 3. Backoff and Retry Mechanism
 
 **Exponential Backoff:**
 - Base delay increases exponentially with failure count: `Math.pow(2, numberOfFailures)`
@@ -125,7 +102,7 @@ interface QueryState {
 - Failed calls are automatically retried with increasing delays
 - Successful retries reduce the failure count, allowing gradual recovery
 
-#### 3. Load Management
+#### 4. Load Management
 
 **Concurrent Call Limiting:**
 - Maximum 5 active calls to prevent overwhelming the external service
@@ -137,7 +114,7 @@ interface QueryState {
 - Successful requests restore normal processing speed
 - Failure count decreases with successful retries, enabling recovery detection
 
-#### 4. Enhanced Error Responses
+#### 5. Enhanced Error Responses
 
 **Implemented in `services/api-middleware.ts`:**
 - Standardized error response format with timestamps and request paths
