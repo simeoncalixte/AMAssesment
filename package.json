@@ -1,0 +1,39 @@
+{
+  "name": "challenge-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "start": "ts-node services/index.ts",
+    "build": "tsc",
+    "dev": "ts-node --watch services/index.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@types/benchmark": "^2.1.5",
+    "msw": "^2.7.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "@fastify/swagger": "^9.6.1",
+    "@fastify/swagger-ui": "^5.2.3",
+    "@fastify/type-provider-typebox": "^6.1.0",
+    "@sinclair/typebox": "^0.34.41",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.10.1",
+    "@types/supertest": "^6.0.3",
+    "babel-jest": "^30.2.0",
+    "fastify": "^5.6.2",
+    "jest": "^30.2.0",
+    "benchmark": "^2.1.4",
+    "supertest": "^7.1.4",
+    "ts-jest": "^29.4.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
